@@ -1,0 +1,5 @@
+ipykernel
+nltk
+transformers
+numpy
+torch
