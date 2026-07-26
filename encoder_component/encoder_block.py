@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 import math
 
-from Multihead_attention import MultiHeadAttentionBlock
-from residual_connection import ResidualConnection
-from feed_forward_network import FeedForwardBlock
+from encoder_component.Multihead_attention import MultiHeadAttentionBlock
+from encoder_component.residual_connection import ResidualConnection
+from encoder_component.feed_forward_network import FeedForwardBlock
 
 class EncoderBlock(nn.Module):
     

@@ -8,6 +8,7 @@ from encoder_component.layer_normalization import LayerNormalization
 from encoder_component.Multihead_attention import MultiHeadAttentionBlock
 from encoder_component.feed_forward_network import FeedForwardBlock
 from encoder_component.encoder_block import EncoderBlock
+from decoder_component.decoder_block import DecoderBlock
 
 
 class Encoder(nn.Module):
@@ -32,7 +33,7 @@ class Decoder(nn.Module):
     def forward(self,x,ecoder_output,src_mask,tgt_mask):
         for layer in self.layers:
             x=layer(x,ecoder_output,src_mask,tgt_mask)
-            return self.norm(x)
+        return self.norm(x)
         
 class ProjectionLayer(nn.Module):
     
@@ -94,12 +95,12 @@ def build_transformer(src_vocab_size:int,tgt_vocab_size:int,src_seq_len:int,tgt_
         decoder_self_attention_block=MultiHeadAttentionBlock(d_model=d_model,h=h,droupout=droupout)
         decoder_cross_attention_block=MultiHeadAttentionBlock(d_model=d_model,h=h,droupout=droupout)
         decoder_forward_block=FeedForwardBlock(d_model=d_model,d_ff=d_ff,dropout=droupout)
-        decoder_block=Decoder(decoder_self_attention_block,decoder_cross_attention_block,decoder_forward_block,droupout)
+        decoder_block=DecoderBlock(decoder_self_attention_block,decoder_cross_attention_block,decoder_forward_block,droupout)
         decoder_blocks.append(decoder_block)
         
     # create the encoder and decoder
     ecoder=Encoder(nn.ModuleList(encoder_blocks))
-    decoder=Decoder(nn.ModuleList(decoder_block))
+    decoder=Decoder(nn.ModuleList(decoder_blocks))
     
     # Create the projection layer
     projection_layer=ProjectionLayer(d_model=d_model,vocab_size=tgt_vocab_size)
