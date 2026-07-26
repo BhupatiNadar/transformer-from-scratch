@@ -1,13 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "trasformer"
+name = "transformer-from-scratch"
 version = "0.1.0"
-description = "Add your description here"
+description = "Transformer architecture implemented from scratch using PyTorch"
 readme = "README.md"
 requires-python = ">=3.13"
+
 dependencies = [
     "ipykernel>=7.3.0",
     "nltk>=3.10.0",
     "numpy>=2.5.1",
     "torch>=2.13.0",
     "transformers>=5.14.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "encoder_component*",
+    "decoder_component*",
 ]
